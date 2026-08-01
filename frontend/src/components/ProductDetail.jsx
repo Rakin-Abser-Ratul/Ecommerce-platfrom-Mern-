@@ -39,7 +39,7 @@ const ProductDetail = () => {
   const fetchProduct = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`http://localhost:5000/api/products/${productId}`);
+      const res = await fetch(`https://ecommerce-platfrom-mern-git-main-rakin-abser-ratul1.vercel.app/api/products/${productId}`);
       if (!res.ok) {
         if (res.status === 404) throw new Error("Product not found");
         throw new Error("Failed to load product details");
@@ -73,7 +73,7 @@ const ProductDetail = () => {
     await Promise.all(
       missingUserIds.map(async (userId) => {
         try {
-          const res = await fetch(`http://localhost:5000/api/users/${userId}`);
+          const res = await fetch(`https://ecommerce-platfrom-mern-git-main-rakin-abser-ratul1.vercel.app/api/users/${userId}`);
           if (res.ok) {
             const userData = await res.json();
             fetchedNames[userId] = userData.username || userData.name;
@@ -132,7 +132,7 @@ const ProductDetail = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/products/${productId}/reviews`,
+        `https://ecommerce-platfrom-mern-git-main-rakin-abser-ratul1.vercel.app/api/products/${productId}/reviews`,
         {
           method: "POST",
           headers: {

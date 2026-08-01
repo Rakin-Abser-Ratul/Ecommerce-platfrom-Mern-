@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'http://localhost:5000/api/', // Matches FastAPI prefix
+  baseURL: 'https://ecommerce-platfrom-mern-git-main-rakin-abser-ratul1.vercel.app/api/', // Matches FastAPI prefix
 });
 
 // Request Interceptor: Attach JWT Bearer Token

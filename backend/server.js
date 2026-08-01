@@ -16,9 +16,26 @@ connectDB();
 const app = express();
 
 // Middlewares
-app.use(morgan('dev')); 
-app.use(cors());
-app.options('/{*splat}', cors());   // ← FIXED (was '*')
+app.use(morgan('dev'));
+
+// Improved CORS (fixes the localhost → Vercel problem)
+app.use(cors({
+  origin: [
+    'http://localhost:5173',           // Vite frontend
+    'http://localhost:3000',           // optional
+    // Add your deployed frontend URL here later
+  ],
+  credentials: true
+}));
+
+app.options('/{*splat}', cors({
+  origin: [
+    'http://localhost:5173',
+    'http://localhost:3000',
+  ],
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
