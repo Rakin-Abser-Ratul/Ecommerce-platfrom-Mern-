@@ -1,0 +1,139 @@
+/* Container Background */
+.up-page {
+  background-color: #f5f5f5;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  box-sizing: border-box;
+}
+
+/* Central Notice Box */
+.up-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  max-width: 480px;
+  width: 100%;
+  padding: 36px 28px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* Warning Icon */
+.up-icon-wrapper {
+  width: 60px;
+  height: 60px;
+  background-color: #fff3ed;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px auto;
+}
+
+.up-icon {
+  width: 36px;
+  height: 36px;
+  color: #f57224;
+}
+
+/* Titles & Text */
+.up-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #212121;
+  margin: 0 0 10px 0;
+}
+
+.up-description {
+  font-size: 14px;
+  color: #616161;
+  line-height: 1.5;
+  margin: 0 0 24px 0;
+}
+
+/* Optional Product Preview Badge */
+.up-product-summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #fafafa;
+  border: 1px solid #eeeeee;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.up-product-img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.up-product-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.up-product-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #212121;
+  line-height: 1.3;
+}
+
+.up-product-price {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f57224;
+  margin-top: 2px;
+}
+
+/* Action Buttons */
+.up-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.up-btn-primary {
+  background-color: #f57224;
+  color: #ffffff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.up-btn-primary:hover {
+  background-color: #d95d13;
+}
+
+.up-cart-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.up-btn-secondary {
+  color: #757575;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px;
+  transition: color 0.2s ease;
+}
+
+.up-btn-secondary:hover {
+  color: #212121;
+}

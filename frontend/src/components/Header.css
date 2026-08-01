@@ -1,0 +1,124 @@
+/* Sticky Header Outer Wrapper */
+.header-container {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 3px 12px rgba(217, 93, 19, 0.2);
+}
+
+/* Navbar Base Bar - #d95d13 Accent Gradient */
+.custom-navbar {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;            
+  padding: 0.85rem 2.5rem;
+  background: linear-gradient(135deg, #e66a1f 0%, #d95d13 100%); 
+  backdrop-filter: blur(8px);
+}
+
+/* Brand Logo Styling */
+.navbar-brand-custom {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-decoration: none;
+  letter-spacing: -0.3px;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.2s ease;
+}
+
+.navbar-brand-custom:hover {
+  opacity: 0.95;
+}
+
+.brand-accent {
+  font-weight: 900;
+  margin-right: 4px;
+  color: #fff3eb; /* Soft warm highlight */
+}
+
+/* Button Group Container */
+.navbar-buttons-custom {
+  display: flex;
+  align-items: center;
+  gap: 12px;                    
+}
+
+/* Shared Nav Button Base */
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 18px;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+}
+
+.nav-btn:active {
+  transform: translateY(1px);
+}
+
+/* Glass Variant (Login, Dashboard) */
+.btn-login,
+.btn-dashboard {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.btn-login:hover,
+.btn-dashboard:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.7);
+  color: #ffffff;
+}
+
+/* Solid White Pop Variant (Register) */
+.btn-register {
+  color: #d95d13; /* Matching your exact orange */
+  background-color: #ffffff;
+  border: 1px solid #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-register:hover {
+  background-color: #fff6f0;
+  border-color: #fff6f0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Logout Button Variant */
+.btn-logout {
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.btn-logout:hover {
+  background-color: rgba(0, 0, 0, 0.35);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+}
+
+/* Responsive Scaling for Small Devices */
+@media (max-width: 576px) {
+  .custom-navbar {
+    padding: 0.75rem 1.25rem;
+  }
+
+  .navbar-brand-custom {
+    font-size: 1.25rem;
+  }
+
+  .nav-btn {
+    padding: 6px 12px;
+    font-size: 0.82rem;
+  }
+}

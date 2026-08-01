@@ -1,0 +1,195 @@
+/* Isolated Outer Page Container */
+.register-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 80px);
+  background-color: #eef0f3; /* Neutral gray matching ProductList/Login backdrop */
+  padding: 30px 20px;
+  box-sizing: border-box;
+}
+
+/* Elevated Container Card */
+.register-page-container .register-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 420px;
+  padding: 36px 32px;
+  border-radius: 10px;
+  border: 1px solid #dcdee0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+.register-page-container .register-title {
+  margin: 0;
+  color: #1d1d1f;
+  font-size: 24px;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: -0.3px;
+}
+
+/* Matching Orange Brand Underline */
+.register-page-container .register-title-underline {
+  width: 36px;
+  height: 3px;
+  background-color: #d95d13;
+  border-radius: 2px;
+  margin: 6px auto 10px auto;
+}
+
+.register-page-container .register-subtitle {
+  margin: 0 0 24px 0;
+  color: #6e6e73;
+  font-size: 13px;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Form Groups & Labels */
+.register-page-container .register-form-group {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.register-page-container .register-form-group label {
+  margin-bottom: 6px;
+  color: #1d1d1f;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Input Fields with Orange Focus Ring */
+.register-page-container .register-control {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 14px;
+  border: 1px solid #d2d2d7;
+  border-radius: 6px;
+  background-color: #ffffff;
+  color: #1d1d1f;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.register-page-container .register-control:focus {
+  border-color: #d95d13;
+  box-shadow: 0 0 0 3px rgba(217, 93, 19, 0.15);
+}
+
+/* Field Validation Errors */
+.register-page-container .register-control.is-invalid {
+  border-color: #ef4444;
+  background-color: #fef2f2;
+}
+
+.register-page-container .register-control.is-invalid:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+.register-page-container .register-field-error {
+  color: #dc2626;
+  font-size: 12px;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+/* Alerts */
+.register-page-container .register-alert {
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.register-page-container .register-alert-success {
+  background-color: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.register-page-container .register-alert-danger {
+  background-color: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+/* Submit Action Button (#d95d13 Theme) */
+.register-page-container .register-btn-submit {
+  width: 100%;
+  padding: 11px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #d95d13;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin-top: 6px;
+  box-shadow: 0 2px 6px rgba(217, 93, 19, 0.25);
+}
+
+.register-page-container .register-btn-submit:hover:not(:disabled) {
+  background-color: #c2510f;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(217, 93, 19, 0.3);
+}
+
+.register-page-container .register-btn-submit:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.register-page-container .register-btn-submit:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+/* Loading Spinner inside Button */
+.register-spinner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.register-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid #ffffff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+}
+
+/* Footer Link Redirect */
+.register-page-container .register-auth-redirect {
+  margin-top: 22px;
+  margin-bottom: 0;
+  font-size: 13px;
+  color: #6e6e73;
+  text-align: center;
+}
+
+.register-page-container .register-auth-redirect a {
+  color: #d95d13;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.15s ease;
+}
+
+.register-page-container .register-auth-redirect a:hover {
+  color: #c2510f;
+  text-decoration: underline;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

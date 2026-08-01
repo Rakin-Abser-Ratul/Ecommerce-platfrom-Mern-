@@ -1,0 +1,51 @@
+/* Reset default margins and force full viewport height */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Flexbox layout on #root to make margin-top: auto work on the footer */
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure body uses modern font and background */
+body {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+/* Footer container styling */
+.footer_class {
+  background-color: #F4F6F8; /* Premium warm alabaster */
+  padding: 2.5rem 1.5rem;   /* Generous padding for a luxury, breathable feel */
+  margin-top: auto;          /* Pushes footer to bottom of flex container */
+  width: 100%;
+  text-align: center;
+}
+
+/* Customizing the divider line to look elegant rather than harsh */
+.footer_class hr {
+  border: 0;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.08); /* Soft, subtle line */
+  max-width: 80%;                        /* Doesn't stretch all the way to edges */
+  margin: 0 auto 1.5rem auto;            /* Centers line and adds space below */
+}
+
+/* Footer copyright text */
+.footer_class p {
+  color: #64748B;             /* Muted slate grey text color */
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;      /* Slight tracking for premium typography */
+  margin: 0;
+}

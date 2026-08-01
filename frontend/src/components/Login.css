@@ -1,0 +1,195 @@
+/* Isolated Outer Page Container */
+.login-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 80px);
+  background-color: #eef0f3; /* Neutral gray matching ProductList backdrop */
+  padding: 30px 20px;
+  box-sizing: border-box;
+}
+
+/* Elevated Container Card */
+.login-page-container .login-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 420px;
+  padding: 36px 32px;
+  border-radius: 10px;
+  border: 1px solid #dcdee0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+.login-page-container .login-title {
+  margin: 0;
+  color: #1d1d1f;
+  font-size: 24px;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: -0.3px;
+}
+
+/* Matching Orange Brand Underline */
+.login-page-container .login-title-underline {
+  width: 36px;
+  height: 3px;
+  background-color: #d95d13;
+  border-radius: 2px;
+  margin: 6px auto 10px auto;
+}
+
+.login-page-container .login-subtitle {
+  margin: 0 0 24px 0;
+  color: #6e6e73;
+  font-size: 13px;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Form Groups & Labels */
+.login-page-container .login-form-group {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-page-container .login-form-group label {
+  margin-bottom: 6px;
+  color: #1d1d1f;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Input Fields with Orange Focus Ring */
+.login-page-container .login-control {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 14px;
+  border: 1px solid #d2d2d7;
+  border-radius: 6px;
+  background-color: #ffffff;
+  color: #1d1d1f;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.login-page-container .login-control:focus {
+  border-color: #d95d13;
+  box-shadow: 0 0 0 3px rgba(217, 93, 19, 0.15);
+}
+
+/* Field Validation Errors */
+.login-page-container .login-control.is-invalid {
+  border-color: #ef4444;
+  background-color: #fef2f2;
+}
+
+.login-page-container .login-control.is-invalid:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+.login-page-container .login-field-error {
+  color: #dc2626;
+  font-size: 12px;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+/* Alerts */
+.login-page-container .login-alert {
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.login-page-container .login-alert-success {
+  background-color: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.login-page-container .login-alert-danger {
+  background-color: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+/* Submit Action Button (#d95d13 Theme) */
+.login-page-container .login-btn-submit {
+  width: 100%;
+  padding: 11px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #d95d13;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin-top: 6px;
+  box-shadow: 0 2px 6px rgba(217, 93, 19, 0.25);
+}
+
+.login-page-container .login-btn-submit:hover:not(:disabled) {
+  background-color: #c2510f;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(217, 93, 19, 0.3);
+}
+
+.login-page-container .login-btn-submit:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.login-page-container .login-btn-submit:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+/* Loading Spinner inside Button */
+.login-spinner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.login-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid #ffffff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+}
+
+/* Footer Link Redirect */
+.login-page-container .login-auth-redirect {
+  margin-top: 22px;
+  margin-bottom: 0;
+  font-size: 13px;
+  color: #6e6e73;
+  text-align: center;
+}
+
+.login-page-container .login-auth-redirect a {
+  color: #d95d13;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.15s ease;
+}
+
+.login-page-container .login-auth-redirect a:hover {
+  color: #c2510f;
+  text-decoration: underline;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
