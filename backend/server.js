@@ -18,7 +18,7 @@ const app = express();
 // Middlewares
 app.use(morgan('dev')); 
 app.use(cors());
-app.options('*', cors());
+app.options('/{*splat}', cors());   // ← FIXED (was '*')
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
