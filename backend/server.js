@@ -21,29 +21,30 @@ app.use(morgan('dev'));
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
-  // Add production frontend URL here when deployed
+  'https://ecommerce-platfrom-mern.vercel.app' // Add your production frontend URL
 ];
 
-const corsOptions = {
+// Reliable CORS configuration
+app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (like Postman or curl)
+    // Allow requests without origin (Postman, curl, server-to-server)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    
+    // Allow all origins in non-production OR if listed in allowedOrigins
+    if (process.env.NODE_ENV !== 'production' || allowedOrigins.includes(origin)) {
       return callback(null, true);
-    } else {
-      return callback(new Error('CORS Policy Restriction'));
     }
+    
+    // Instead of throwing an Error(), gracefully decline origin
+    return callback(null, false);
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
-};
+}));
 
-// 1. Enable CORS for all routes
-app.use(cors(corsOptions));
-
-// 2. Handle pre-flight (OPTIONS) requests safely across all routes
-app.options('*', cors(corsOptions));
+// Pre-flight handling
+app.options('*', cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -58,6 +59,22 @@ app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/users', userRoutes);
+
+// Global Error Handler Middleware
+// Ensures CORS headers are present even when routes return 401, 404, or 500 errors
+app.use((err, req, res, next) => {
+  const origin = req.headers.origin;
+  if (origin) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+  }
+  
+  const statusCode = res.statusCode === 200 ? (err.status || 500) : res.statusCode;
+  res.status(statusCode).json({
+    message: err.message || 'Internal Server Error',
+    stack: process.env.NODE_ENV === 'production' ? null : err.stack,
+  });
+});
 
 // Only listen locally, not in production/Vercel
 if (process.env.NODE_ENV !== 'production') {
