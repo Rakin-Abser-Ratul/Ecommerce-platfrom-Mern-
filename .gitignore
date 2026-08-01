@@ -153,5 +153,10 @@ node_modules
 psd
 thumb
 sketch
+.env
+*.env
+backend/.env
+frontend/.env
+node_modules/
 
 # End of https://www.toptal.com/developers/gitignore/api/react,node
