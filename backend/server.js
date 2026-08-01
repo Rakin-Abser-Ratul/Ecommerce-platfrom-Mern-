@@ -21,30 +21,46 @@ app.use(morgan('dev'));
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
-  'https://ecommerce-platfrom-mern.vercel.app' // Add your production frontend URL
+  'https://ecommerce-platfrom-mern.vercel.app'
 ];
 
-// Reliable CORS configuration
+// Helper function to validate origin (supports local, main production, and Vercel preview URLs)
+const isAllowedOrigin = (origin) => {
+  if (!origin) return true; // Allow Postman / curl / non-browser calls
+  if (allowedOrigins.includes(origin)) return true;
+  if (origin.endsWith('.vercel.app')) return true; // Dynamically allows all Vercel branch previews
+  return false;
+};
+
+// 1. Force explicit CORS headers on EVERY incoming request before routes execution
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (isAllowedOrigin(origin)) {
+    if (origin) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+      res.setHeader('Access-Control-Allow-Credentials', 'true');
+    }
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+
+  // Handle browser OPTIONS preflight instantly
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
+// 2. Additional package handling for standard route wrappers
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests without origin (Postman, curl, server-to-server)
-    if (!origin) return callback(null, true);
-    
-    // Allow all origins in non-production OR if listed in allowedOrigins
-    if (process.env.NODE_ENV !== 'production' || allowedOrigins.includes(origin)) {
+    if (isAllowedOrigin(origin)) {
       return callback(null, true);
     }
-    
-    // Instead of throwing an Error(), gracefully decline origin
     return callback(null, false);
   },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+  credentials: true
 }));
-
-// Pre-flight handling
-app.options('*', cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -60,11 +76,17 @@ app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/users', userRoutes);
 
-// Global Error Handler Middleware
-// Ensures CORS headers are present even when routes return 401, 404, or 500 errors
+// 3. Unmatched route catch-all (debug 404s in Vercel logs)
+app.use((req, res) => {
+  res.status(404).json({
+    message: `Cannot ${req.method} ${req.originalUrl}`
+  });
+});
+
+// 4. Global Error Handler Middleware
 app.use((err, req, res, next) => {
   const origin = req.headers.origin;
-  if (origin) {
+  if (origin && isAllowedOrigin(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Access-Control-Allow-Credentials', 'true');
   }
