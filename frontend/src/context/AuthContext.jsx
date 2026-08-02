@@ -28,23 +28,25 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   // Login handler (FastAPI OAuth2PasswordRequestForm expects form-urlencoded)
-  const login = async (email, password) => {
-    const formData = new URLSearchParams();
-    formData.append('username', email); // OAuth2 expects 'username' field
-    formData.append('password', password);
+  // Login handler for Express MERN Backend
+const login = async (email, password) => {
+  // Send standard JSON payload: { email, password }
+  const res = await API.post('/auth/login', {
+    email: email,
+    password: password
+  });
 
-    const res = await API.post('/auth/login', formData, {
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    });
+  // Extract token from response (adjust property name if your backend uses 'token' instead of 'access_token')
+  const token = res.data.token || res.data.access_token;
+  if (token) {
+    localStorage.setItem('token', token);
+  }
 
-    const { access_token } = res.data;
-    localStorage.setItem('token', access_token);
-
-    // Fetch user profile immediately after getting the token
-    const userRes = await API.get('/auth/me');
-    setUser(userRes.data);
-    return userRes.data;
-  };
+  // Fetch user profile immediately after getting the token
+  const userRes = await API.get('/auth/me');
+  setUser(userRes.data);
+  return userRes.data;
+};
 
   // Register handler
   const register = async (username, email, password) => {

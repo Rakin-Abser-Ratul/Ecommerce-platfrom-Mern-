@@ -1,22 +1,22 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import morgan from 'morgan';
+
 import connectDB from './db.js';
 import authRoutes from './routes/auth.js';
 import productRoutes from './routes/productRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
-import morgan from 'morgan';
 import userRoutes from './routes/userRoutes.js';
 
 dotenv.config();
-
-// Connect to MongoDB Atlas
-connectDB();
 
 const app = express();
 
 // Middlewares
 app.use(morgan('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const allowedOrigins = [
   'http://localhost:5173',
@@ -24,46 +24,40 @@ const allowedOrigins = [
   'https://ecommerce-platfrom-mern.vercel.app'
 ];
 
-// Helper function to validate origin (supports local, main production, and Vercel preview URLs)
 const isAllowedOrigin = (origin) => {
-  if (!origin) return true; // Allow Postman / curl / non-browser calls
+  if (!origin) return true; // Postman/cURL
   if (allowedOrigins.includes(origin)) return true;
-  if (origin.endsWith('.vercel.app')) return true; // Dynamically allows all Vercel branch previews
+  if (origin.endsWith('.vercel.app')) return true; // Dynamic preview domains
   return false;
 };
 
-// 1. Force explicit CORS headers on EVERY incoming request before routes execution
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (isAllowedOrigin(origin)) {
-    if (origin) {
-      res.setHeader('Access-Control-Allow-Origin', origin);
-      res.setHeader('Access-Control-Allow-Credentials', 'true');
-    }
-  }
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-
-  // Handle browser OPTIONS preflight instantly
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
-  }
-  next();
-});
-
-// 2. Additional package handling for standard route wrappers
-app.use(cors({
-  origin: function (origin, callback) {
+// Standard CORS configuration
+const corsOptions = {
+  origin: (origin, callback) => {
     if (isAllowedOrigin(origin)) {
-      return callback(null, true);
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
     }
-    return callback(null, false);
   },
-  credentials: true
-}));
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+};
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Intercept preflight OPTIONS cleanly
+
+// Connect to MongoDB before processing API routes
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error('Database connection error:', err);
+    res.status(500).json({ message: 'Database Connection Failed' });
+  }
+});
 
 // Health check route
 app.get('/', (req, res) => {
@@ -76,21 +70,15 @@ app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/users', userRoutes);
 
-// 3. Unmatched route catch-all (debug 404s in Vercel logs)
+// Unmatched route catch-all
 app.use((req, res) => {
   res.status(404).json({
     message: `Cannot ${req.method} ${req.originalUrl}`
   });
 });
 
-// 4. Global Error Handler Middleware
+// Global Error Handler
 app.use((err, req, res, next) => {
-  const origin = req.headers.origin;
-  if (origin && isAllowedOrigin(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-  }
-  
   const statusCode = res.statusCode === 200 ? (err.status || 500) : res.statusCode;
   res.status(statusCode).json({
     message: err.message || 'Internal Server Error',
@@ -98,7 +86,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Only listen locally, not in production/Vercel
+// Listen locally when developing
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => {
@@ -106,5 +94,5 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
-// CRITICAL FOR VERCEL
+// Export for Vercel
 export default app;
