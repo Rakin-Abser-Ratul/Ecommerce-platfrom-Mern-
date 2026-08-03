@@ -45,8 +45,8 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 };
 
+// app.use(cors()) automatically handles preflight OPTIONS requests across all routes
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // Intercept preflight OPTIONS cleanly
 
 // Connect to MongoDB before processing API routes
 app.use(async (req, res, next) => {

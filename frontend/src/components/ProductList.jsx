@@ -26,7 +26,7 @@ const ProductList = () => {
     try {
       setLoading(true);
       setError(null);
-      const res = await fetch("https://ecommerce-platfrom-mern-git-main-rakin-abser-ratul1.vercel.app/api/products/");
+      const res = await fetch("http://localhost:5000/api/products/");
       if (!res.ok) {
         throw new Error("Failed to load products");
       }

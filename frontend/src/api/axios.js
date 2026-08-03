@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const API = axios.create({
-  baseURL: 'https://ecommerce-platfrom-mern-git-main-rakin-abser-ratul1.vercel.app/', // Your FastAPI server URL
+  baseURL: 'http://localhost:5000', // Your FastAPI server URL
 })
 
 // Attach JWT bearer token to requests automatically
